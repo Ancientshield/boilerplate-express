@@ -42,4 +42,12 @@ app.get(
 	}
 );
 
+// Get input from client - Route parameters
+app.get('/:word/echo', (req, res) => {
+	let word = req.params.word;
+
+	let obj = { echo: word, echo: word };
+	res.send(obj);
+});
+
 module.exports = app;
