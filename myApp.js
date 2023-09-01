@@ -1,8 +1,12 @@
-require('dotenv').config();
+\require('dotenv').config();
 let express = require('express');
 let app = express();
 let proc = process.env;
 proc.MESSAGE_STYLE = 'uppercase';
+
+// Use body-parser to Parse POST Requests
+let bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({extended: false}));
 
 // use middleware app.use(path, middlewareFunction) to serve static assets.
 app.use('/public', express.static(__dirname + '/public'));
@@ -52,11 +56,17 @@ app.get('/:word/echo', (req, res) => {
 
 // Get input from client - Query parameters
 app.get('/name', (req, res) => {
-	let first = req.query.first;
-	let last = req.query.last;
+  let first = req.query.first;
+  let last = req.query.last;
+  
+  let obj = { name: `${first} ${last}` };
+  res.send(obj);
+});
 
-	let obj = { name: `${first} ${last}` };
-	res.send(obj);
+// Get Data from POST Requests
+app.post('/name', (req, res) => {
+  let name = `${req.body.first} ${req.body.last}`;
+  res.json({name: name});
 });
 
 module.exports = app;
