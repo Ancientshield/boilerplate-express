@@ -50,4 +50,13 @@ app.get('/:word/echo', (req, res) => {
 	res.send(obj);
 });
 
+// Get input from client - Query parameters
+app.get('/name', (req, res) => {
+	let first = req.query.first;
+	let last = req.query.last;
+
+	let obj = { name: `${first} ${last}` };
+	res.send(obj);
+});
+
 module.exports = app;
